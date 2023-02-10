@@ -1,6 +1,6 @@
 // All Jobs
 const getAllJobs = async (req, res) => {
-   res.send("Get All Jobs");
+   res.send(req.user);
 };
 
 // Single Job

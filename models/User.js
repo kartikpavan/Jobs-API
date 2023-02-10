@@ -28,6 +28,7 @@ const UserSchema = new mongoose.Schema({
 //! Instance Methods
 // Documents can have functions on them, acting as an instance for schema;
 // we assign a function to the methods object of our Schema
+
 UserSchema.methods.createJWT = function () {
    return jwt.sign(
       { userId: this._id, name: this.name },
@@ -36,6 +37,11 @@ UserSchema.methods.createJWT = function () {
          expiresIn: process.env.JWT_LIFETIME, // jwt expiry time
       }
    );
+};
+
+// Compare Password Instance Method
+UserSchema.methods.comparePasswords = function (userPassword) {
+   return bcrypt.compare(userPassword, this.password);
 };
 
 UserSchema.pre("save", async function (next) {
