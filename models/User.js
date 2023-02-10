@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const UserSchema = new mongoose.Schema({
    name: {
@@ -24,9 +25,22 @@ const UserSchema = new mongoose.Schema({
    },
 });
 
+//! Instance Methods
+// Documents can have functions on them, acting as an instance for schema;
+// we assign a function to the methods object of our Schema
+UserSchema.methods.createJWT = function () {
+   return jwt.sign(
+      { userId: this._id, name: this.name },
+      process.env.JWT_SECRET, // jwt secret
+      {
+         expiresIn: process.env.JWT_LIFETIME, // jwt expiry time
+      }
+   );
+};
+
 UserSchema.pre("save", async function (next) {
    const salt = await bcrypt.genSalt(10);
-   this.password = await bcrypt.hash(this.password, salt); // here this refers to the User Document
+   this.password = await bcrypt.hash(this.password, salt);
    next();
 });
 
