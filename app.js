@@ -16,7 +16,7 @@ const authMiddleware = require("./middleware/authentication.js");
 app.use(express.json());
 
 app.get("/", (req, res) => {
-   res.send("Welcome to jobs api ");
+  res.send("Welcome to jobs api ");
 });
 
 app.use("/api/v1/auth", authRouter);
@@ -27,15 +27,15 @@ app.use(errorHandlerMiddleware);
 
 const PORT = process.env.PORT || 5000;
 const start = async () => {
-   try {
-      await connectDB(process.env.MONGO_URI);
-      app.listen(PORT, () => {
-         console.log(`Listening on PORT ${PORT}..`);
-      });
-      console.log("Connection to DB successful");
-   } catch (error) {
-      console.log(error);
-   }
+  try {
+    await connectDB(process.env.MONGO_URI);
+    app.listen(PORT, () => {
+      console.log(`Listening on PORT ${PORT}..`);
+    });
+    console.log("Connection to DB successful");
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 start();
