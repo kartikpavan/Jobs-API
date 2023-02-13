@@ -19,6 +19,10 @@ app.get("/", (req, res) => {
   res.send("Welcome to jobs api ");
 });
 
+app.get("/about", (req, res) => {
+  res.send("Welcome to About Route");
+});
+
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authMiddleware, jobsRouter);
 
